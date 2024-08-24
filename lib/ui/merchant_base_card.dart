@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rostr_customer/models/merchant.dart';
+import 'package:rostr_customer/ui/merchant_expanded_card.dart';
 
 // ignore: must_be_immutable
 class MerchantBaseCard extends StatelessWidget {
