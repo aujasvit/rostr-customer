@@ -5,6 +5,7 @@ import 'package:nostr/nostr.dart';
 import 'package:rostr_customer/main.dart';
 import 'package:rostr_customer/models/relay.dart';
 import 'package:rostr_customer/models/relay_pool.dart';
+import 'package:rostr_customer/services/crud/relays_service.dart';
 import 'package:rostr_customer/services/providers/relay_list_provider.dart';
 
 final StateNotifierProvider<RelayPoolNotifier, RelayPool> relayPoolProvider =
@@ -19,11 +20,12 @@ final StateNotifierProvider<RelayPoolNotifier, RelayPool> relayPoolProvider =
 
       if (event.kind == 10001) {
         final content = json.decode(event.content);
-
+        final relayService = RelaysService();
         final newRelayList = RelayList();
         for (final relayString in content[relayListKey]) {
           final relay = Relay.fromJSON(json.decode(relayString));
           newRelayList.upsertRelay(relay);
+          relayService.upsertRelay(relay: relay);
         }
         relayPool.updateRelayList(newRelayList);
       }
