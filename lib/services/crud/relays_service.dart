@@ -99,7 +99,6 @@ class RelaysService {
   }
 
   Future<RelayList> getRelayList() async {
-    final db = getDatabaseOrThrow();
     final dbRelayList = await getAllRelays();
     final relayList = RelayList();
     for (final dbRelay in dbRelayList) {
