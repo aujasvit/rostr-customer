@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart';
 import 'package:rostr_customer/models/merchant.dart';
-import 'package:rostr_customer/services/relay_pool_provider.dart';
+import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 
 final merchantListProvider =
     StateNotifierProvider<MerchantListNotifier, MerchantList>(

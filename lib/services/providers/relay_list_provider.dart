@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart';
 import 'package:rostr_customer/models/relay.dart';
-import 'package:rostr_customer/services/relay_pool_provider.dart';
+import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 
 final StateNotifierProvider<RelayListNotifier, RelayList> relayListProvider =
     StateNotifierProvider<RelayListNotifier, RelayList>(
@@ -26,8 +26,7 @@ final StateNotifierProvider<RelayListNotifier, RelayList> relayListProvider =
               // TODO add method to geographically check relays
               newRelayList.upsertRelay(relay);
             }
-
-            ref.read(relayPoolProvider.notifier).updateRelayList(newRelayList);
+            relayList.update(newRelayList);
           }
         }
       },
