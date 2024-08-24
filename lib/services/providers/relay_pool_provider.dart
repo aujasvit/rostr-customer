@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nostr/nostr.dart';
+import 'package:rostr_customer/main.dart';
 import 'package:rostr_customer/models/relay.dart';
 import 'package:rostr_customer/models/relay_pool.dart';
 import 'package:rostr_customer/services/providers/relay_list_provider.dart';
 
 final StateNotifierProvider<RelayPoolNotifier, RelayPool> relayPoolProvider =
     StateNotifierProvider<RelayPoolNotifier, RelayPool>((ref) {
-  final relayPool = RelayPoolNotifier(relayListInit: RelayList());
+  final relayPool = RelayPoolNotifier(relayListInit: ref.watch(initAllRelays));
 
   final streamController = ref.read(relayPoolProvider).controller;
   final stream = streamController.stream;

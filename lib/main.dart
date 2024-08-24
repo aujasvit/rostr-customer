@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rostr_customer/models/merchant.dart';
-import 'package:rostr_customer/services/merchant_list_provider.dart';
-import 'package:rostr_customer/services/relay_list_provider.dart';
-import 'package:rostr_customer/services/relay_pool_provider.dart';
+import 'package:rostr_customer/models/relay.dart';
+import 'package:rostr_customer/services/crud/relays_service.dart';
+import 'package:rostr_customer/services/providers/merchant_list_provider.dart';
+import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 import 'package:rostr_customer/ui/merchant_base_card.dart';
 
-void main() {
-  runApp(ProviderScope(child: MyApp()));
+final initAllRelays = Provider<RelayList>((ref) => throw UnimplementedError());
+
+void main() async {
+  final relaysService = RelaysService();
+  await relaysService.open();
+
+  final relayList = await relaysService.getRelayList();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(ProviderScope(
+    overrides: [initAllRelays.overrideWithValue(relayList)],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +44,8 @@ class _EagerInitialization extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final relayList = await relaysService.getRelayList();
+
     ref.watch(relayPoolProvider);
     ref.watch(merchantListProvider);
     return child;

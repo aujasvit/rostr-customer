@@ -84,6 +84,45 @@ class RelaysService {
       log('Error opening database: $e');
     }
   }
+
+  Future<DatabaseRelay?> getRelay({required String pubkey}) async {
+    final db = getDatabaseOrThrow();
+    final results = await db.query(
+      relayTable,
+      where: '$pubkeyColumn = ?',
+      whereArgs: [pubkey],
+    );
+    if (results.isEmpty) {
+      return null;
+    }
+    return DatabaseRelay.fromRow(results.first);
+  }
+
+  Future<RelayList> getRelayList() async {
+    final db = getDatabaseOrThrow();
+    final dbRelayList = await getAllRelays();
+    final relayList = RelayList();
+    for (final dbRelay in dbRelayList) {
+      relayList.upsertRelay(Relay(
+        pubkey: dbRelay.pubkey,
+        name: dbRelay.name,
+        url: dbRelay.url,
+        pricing: dbRelay.pricing,
+        description: dbRelay.description,
+        contactDetails: dbRelay.contactDetails,
+        latitude: dbRelay.latitude,
+        longitude: dbRelay.longitude,
+        locationFormat: dbRelay.locationFormat,
+      ));
+    }
+    return relayList;
+  }
+
+  Future<List<DatabaseRelay>> getAllRelays() async {
+    final db = getDatabaseOrThrow();
+    final results = await db.query(relayTable);
+    return results.map((row) => DatabaseRelay.fromRow(row)).toList();
+  }
 }
 
 class DatabaseRelay {
