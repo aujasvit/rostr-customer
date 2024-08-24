@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:nostr/nostr.dart';
 import 'package:rostr_customer/models/relay.dart';
+import 'package:rostr_customer/services/location_services.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
 
@@ -52,8 +53,22 @@ class RelayPool {
     }
   }
 
+  bool isInRange(Relay relay) {
+    return true;
+    // final location = LocationServices().location;
+    // if (location == null) return true;
+    // final distance = LocationServices().distanceBetween(
+    //   location.latitude,
+    //   location.longitude,
+    //   relay.latitude,
+    //   relay.longitude,
+    // );
+    // return distance < 1000;
+  }
+
   Future<void> connectAndSub(List<Filter> filter) async {
     for (final relay in relayList.relayList) {
+      if (!isInRange(relay)) continue;
       connectSingleRelay(relay).then(
         (value) {
           if (_connectedRelays.contains(relay) &&

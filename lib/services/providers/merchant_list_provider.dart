@@ -8,7 +8,14 @@ import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 final merchantListProvider =
     StateNotifierProvider<MerchantListNotifier, MerchantList>(
   (ref) {
-    final merchantList = MerchantListNotifier();
+    final merchantList = MerchantListNotifier(ref: ref);
+    return merchantList;
+  },
+);
+
+class MerchantListNotifier extends StateNotifier<MerchantList> {
+  final StateNotifierProviderRef ref;
+  MerchantListNotifier({required this.ref}) : super(MerchantList()) {
     final streamController = ref.read(relayPoolProvider).controller;
     final stream = streamController.stream;
     stream.listen(
@@ -24,22 +31,22 @@ final merchantListProvider =
               newMerchantList.upsertMerchant(merchant);
             }
 
-            merchantList.updateMerchantList(newMerchantList);
+            updateMerchantList(newMerchantList);
           }
         }
       },
     );
-    return merchantList;
-  },
-);
-
-class MerchantListNotifier extends StateNotifier<MerchantList> {
-  MerchantListNotifier() : super(MerchantList());
+  }
 
   void updateMerchantList(MerchantList newMerchants) {
     for (final merchant in newMerchants.merchantList) {
       state.upsertMerchant(merchant);
     }
+    state = state.copyWith();
+  }
+
+  void clear() {
+    state = MerchantList();
     state = state.copyWith();
   }
 }

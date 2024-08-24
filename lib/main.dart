@@ -6,16 +6,16 @@ import 'package:rostr_customer/services/crud/relays_service.dart';
 import 'package:rostr_customer/services/providers/merchant_list_provider.dart';
 import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 import 'package:rostr_customer/ui/merchant_base_card.dart';
+import 'package:rostr_customer/ui/merchant_list_page.dart';
 
 final initAllRelays = Provider<RelayList>((ref) => throw UnimplementedError());
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final relaysService = RelaysService();
   await relaysService.open();
 
   final relayList = await relaysService.getRelayList();
-
-  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(ProviderScope(
     overrides: [initAllRelays.overrideWithValue(relayList)],
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return const _EagerInitialization(
       child: MaterialApp(
         title: "Rostr Customer",
-        home: HomePage(),
+        home: MerchantListPage(),
         debugShowCheckedModeBanner: false,
       ),
     );

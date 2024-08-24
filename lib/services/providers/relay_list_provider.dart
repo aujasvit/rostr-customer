@@ -10,27 +10,6 @@ final StateNotifierProvider<RelayListNotifier, RelayList> relayListProvider =
   (ref) {
     final relayList = RelayListNotifier();
 
-    final streamController = ref.read(relayPoolProvider).controller;
-    final stream = streamController.stream;
-    stream.listen(
-      (message) {
-        if (message.messageType == MessageType.event) {
-          final event = message.message;
-
-          if (event.kind == 10001) {
-            final content = json.decode(event.content);
-
-            final newRelayList = RelayList();
-            for (final relayString in content[relayListKey]) {
-              final relay = Relay.fromJSON(json.decode(relayString));
-              // TODO add method to geographically check relays
-              newRelayList.upsertRelay(relay);
-            }
-            relayList.update(newRelayList);
-          }
-        }
-      },
-    );
     return relayList;
   },
 );
