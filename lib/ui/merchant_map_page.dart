@@ -154,7 +154,6 @@ class MerchantMapPage extends ConsumerWidget {
             IconButton(
               icon: const Icon(Icons.refresh_rounded),
               onPressed: () {
-                log('hi');
                 // log(ref.read(merchantListProvider).merchantList.toString());
                 final relayPool = ref.read(relayPoolProvider);
                 final merchantListFilter = Filter(kinds: <int>[10001]);

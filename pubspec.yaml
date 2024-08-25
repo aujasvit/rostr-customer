@@ -46,6 +46,7 @@ dependencies:
   latlong2: ^0.9.1
   flutter_map: ^6.1.0
   flutter_map_animations: ^0.6.0
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:
