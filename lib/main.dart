@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rostr_customer/models/merchant.dart';
 import 'package:rostr_customer/models/relay.dart';
 import 'package:rostr_customer/services/crud/relays_service.dart';
+import 'package:rostr_customer/services/location_services.dart';
 import 'package:rostr_customer/services/providers/merchant_list_provider.dart';
 import 'package:rostr_customer/services/providers/relay_pool_provider.dart';
 import 'package:rostr_customer/ui/merchant_base_card.dart';
@@ -12,6 +13,7 @@ final initAllRelays = Provider<RelayList>((ref) => throw UnimplementedError());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await handleLocationPermission();
   final relaysService = RelaysService();
   await relaysService.open();
 

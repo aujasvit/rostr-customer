@@ -156,10 +156,10 @@ class MerchantMapPage extends ConsumerWidget {
               onPressed: () {
                 log('hi');
                 // log(ref.read(merchantListProvider).merchantList.toString());
-                final relayGroup = ref.read(relayPoolProvider);
+                final relayPool = ref.read(relayPoolProvider);
                 final merchantListFilter = Filter(kinds: <int>[10001]);
                 ref.read(merchantListProvider.notifier).clear();
-                relayGroup.connectAndSub(<Filter>[merchantListFilter]);
+                relayPool.connectAndSub(<Filter>[merchantListFilter]);
                 // relayGroup.connect().then((value) {
                 //   ref.read(merchantListProvider.notifier).clear();
                 //   final merchantListFilter = Filter(kinds: <int>[11001]);
@@ -189,7 +189,11 @@ class MerchantMapPage extends ConsumerWidget {
                 );
               } else {
                 return const Center(
-                  child: Text('Location permission denied'),
+                  child: Text('Location permission denied',
+                      style: TextStyle(
+                        fontFamily: 'Brand-Regular',
+                        fontSize: 22,
+                      )),
                 );
               }
             } else {
