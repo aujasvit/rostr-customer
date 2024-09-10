@@ -1,6 +1,6 @@
 # Rostr Customer App
 
-This repository contains the **Rostr Customer App**, a mobile application that allows customers to discover and connect with gig workers in their local area using the decentralized Rostr network, powered by the Nostr protocol.
+This repository contains the **Rostr Customer App**, a mobile application that allows customers to discover and connect with gig workers in their local area using the decentralized [Rostr](https://github.com/devcdis/rostr) network, powered by the Nostr protocol.
 
 ## Features
 
